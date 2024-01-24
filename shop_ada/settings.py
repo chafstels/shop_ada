@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+import os
 from datetime import timedelta
 from pathlib import Path
 from decouple import config
@@ -142,8 +143,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -190,14 +194,14 @@ CSRF_TRUSTED_ORIGINS = ['https://0879-213-109-66-242.ngrok-free.app']
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379",
+        "LOCATION": "redis://redis:6379",
         # 'OPTIONS': {
         #     'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         # }
     }
 }
 
-REDIS_HOST = '127.0.0.1'
+REDIS_HOST = 'redis'
 REDIS_PORT = '6379'
 
 #Celery settings
@@ -231,22 +235,13 @@ LOGGING = {
     'handlers': {
         'console': {'class': 'logging.StreamHandler',
                     'formatter': 'main_format'},
-        'file': {
-            'class': 'logging.FileHandler',
-            'formatter': 'main_format',
-            'filename': '/Users/anton/PycharmProjects/shopbooks/log.log',
-        }
     },
 
     'loggers': {
         'django.db.backends': {
             'handlers': ['console'],
-            'level': 'DEBUG'
+            'level': 'WARNING'
         },
-        'product': {
-            'handlers': ['file'],
-            'level': 'DEBUG'
-        }
     }
 }
 
