@@ -16,6 +16,11 @@ services:
       - db
       - redis
       - migration
+    env_file:
+      - .env
+    environment:
+      - VIRTUAL_HOST=shopada3.freemyip.com
+      - LETSENCRYPT_HOST=shopada3.freemyip.com
 
   db:
     image: postgres
